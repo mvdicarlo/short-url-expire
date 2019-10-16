@@ -19,7 +19,8 @@ const recordSchema = new Schema({
   expires: {
     type: Date,
     required: true
-  }
+  },
+  password: String
 })
 
 const Record = mongoose.model('Record', recordSchema)

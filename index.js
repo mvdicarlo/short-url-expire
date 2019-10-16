@@ -6,7 +6,7 @@ const expireService = new(require('./src/services/expire.service'))()
 
 const app = require('fastify')()
 app.register(require('fastify-static'), {
-  root: path.join(__dirname, 'public'),
+  root: path.join(__dirname, 'svelte', 'public'),
   wildcard: false
 })
 
@@ -19,12 +19,16 @@ app.setNotFoundHandler((request, reply) => {
 
 app.get('/:id', (req, res) => {
   recordService.getUrl(req.params.id)
-    .then(url => res.redirect(url || '/?r=Invalid Or Expired'))
+    .then(url => res.redirect(url || '/?r=Link Invalid Or Expired'))
 })
 
 app.get('/info/:id', async (req, res) => {
   try {
-    return await recordService.getById(req.params.id)
+    const record = await recordService.getById(req.params.id)
+    if (!record) throw Error('No record found')
+    const rec = record.toJSON()
+    delete rec.password
+    return rec
   } catch (err) {
     const e = new Error()
     e.statusCode = 404
@@ -33,13 +37,26 @@ app.get('/info/:id', async (req, res) => {
   }
 })
 
+app.post('/validate', async (req, res) => {
+  return { isValidUrl: recordService.isValidUrl(req.body.url) }
+})
+
+app.post('/expire', async (req, res) => {
+  try {
+    await recordService.expireUrl(req.body)
+    return {}
+  } catch (err) {
+    const e = new Error()
+    e.statusCode = 400
+    e.message = err.message
+    throw e
+  }
+})
+
 app.post('/create', async (req, res) => {
   try {
     recordService.validate(req.body)
-    const id = await recordService.create(req.body)
-    return {
-      id
-    }
+    return await recordService.create(req.body)
   } catch (err) {
     const e = new Error()
     e.statusCode = 400
