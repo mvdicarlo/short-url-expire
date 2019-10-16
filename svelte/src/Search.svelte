@@ -9,8 +9,8 @@
     e.preventDefault()
     errorMsg = ''
     info = null
-    loading = true
     if (e.target.elements.url.value.trim()) {
+      loading = true
       try {
         const result = await axios.get(`/info/${encodeURIComponent(e.target.elements.url.value.trim())}`)
         info = result.data
@@ -24,11 +24,11 @@
   }
 </script>
 
-<form class="form-inline my-2 my-lg-0" on:submit={handleSubmit}>
+<form class="form-inline d-flex" on:submit={handleSubmit}>
   {#if errorMsg}
     <span class="text-warning mr-1">{errorMsg}</span>
   {/if}
-  <input class="form-control mr-sm-2" name="url" type="text" placeholder="Link stats" title="Display information about a particular shortened link.">
+  <input class="form-control mr-sm-2" style="flex:5" name="url" type="text" placeholder="Link stats" title="Display information about a particular shortened link.">
   <button class="btn btn-secondary my-2 my-sm-0" type="submit" disabled={loading}>Search</button>
 </form>
 

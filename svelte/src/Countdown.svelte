@@ -92,11 +92,11 @@
 
 <div class="text-center">
 {#if expired}
-  <div class="alert alert-warning">
+  <div class="alert alert-warning px-0">
     <strong>Link has expired!</strong>
   </div>
 {:else}
-  <div class="alert">
+  <div class="alert px-0">
   {#each Object.entries(time) as entry}
     <div class="time-box mr-2">
       <div>{entry[1]}</div>

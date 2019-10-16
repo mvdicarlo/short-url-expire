@@ -65,8 +65,8 @@ app.post('/create', async (req, res) => {
   }
 })
 
-app.listen(process.env.PORT)
-  .then(() => console.log(`Server listening on ${process.env.PORT}`))
+app.listen(process.env.PORT || 8080, '0.0.0.0')
+  .then(() => console.log(`Server listening on ${process.env.PORT || 8080}`))
   .catch(err => {
     console.error('Unable to start server', err)
     process.exit(1)

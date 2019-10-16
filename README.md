@@ -18,12 +18,15 @@ Uses lightweight modules where possible.
 
 # Front End Technology Requirement
 The front end must use a fast and lightweight framework.
-
-**Considerations**
-* Svelte
-* Mithril
+Svelte
 
 There must be an additional page to get info about a url.
 Must include:
 * Time until expiration (living countdown)
 * Times visited
+
+# Configs
+PORT=8080
+DB_PORT=27017
+DB_NAME=expirable
+DB_HOST=mongo
