@@ -30,3 +30,14 @@ PORT=8080
 DB_PORT=27017
 DB_NAME=expirable
 DB_HOST=mongo
+
+
+# How To Run
+You will need Docker and Docker-Compose
+
+### Docker
+1) Create .env config file with configs above.
+2) Execute build-container.sh script.
+3) Run npm run deploy.
+4) Wait for containers to initialize.
+5) Open http://localhost:8080 in browser.
